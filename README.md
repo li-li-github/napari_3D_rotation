@@ -35,8 +35,14 @@ for i, fmly in enumerate(uniq_uniorg):
     lab_color[ind] = c
 
 viewer = napari.view_points(
-    umap3d_data, scale=(100,) * 3, shading='spherical', size=0.06, name='umap3d_nb1000', edge_width=0,
-    face_color=lab_color, ndisplay=3,
+    umap3d_data, 
+    scale=(100,) * 3, 
+    shading='spherical', 
+    size=0.06, 
+    name='umap3d_nb1000', 
+    edge_width=0,
+    face_color=lab_color, 
+    ndisplay=3,
 )
 viewer.window.resize(1300, 1000)
 

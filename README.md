@@ -20,7 +20,8 @@ If you are on a M1 Mac, you should try instead the `setup_env.sh` script.
 ## Sample code for generating a rotating 3D UMAP:
 
 In the following we assume you have already the 3D point coordinates
-saved as a numpy array (npy). You can use the [UMAP](https://umap-learn.readthedocs.io/en/latest/) package.
+saved as a numpy array (npy). You can use the [UMAP](https://umap-learn.readthedocs.io/en/latest/) package
+to go from your high-imensional data to 3D UMAP-projected coordinates.
 
 
 ```python

@@ -24,6 +24,9 @@ for i, fmly in enumerate(uniq_uniorg):
     ind = umap_lab[:, 0] == fmly
     lab_color[ind] = c
 
+
+
+
 viewer = napari.view_points(
     umap3d_data, scale=(100,) * 3, shading='spherical', size=0.06, name='umap3d_nb1000', edge_width=0,
     face_color=lab_color, ndisplay=3,
@@ -34,23 +37,39 @@ viewer.window.resize(1300, 1000)
 # Record animation
 animation = Animation(viewer)
 viewer.dims.ndisplay = 3
-nb_steps = 3*60
+
+fps = 10
+nb_steps = 3*fps
 viewer.reset_view()
 original_zoom = viewer.camera.zoom
+
+viewer.camera.zoom = 0.1
 viewer.camera.angles = (0.0, 0.0, 90.0)
 animation.capture_keyframe()
+
+viewer.camera.zoom = original_zoom
 viewer.camera.angles = (0.0, 180.0, 90.0)
 animation.capture_keyframe(steps=nb_steps)
+
 viewer.camera.angles = (0.0, 360.0, 90.0)
 animation.capture_keyframe(steps=nb_steps)
-viewer.camera.zoom = 1.3
+
+viewer.camera.zoom = 1.1
 viewer.camera.angles = (0.0, 180.0+360, 90.0)
 animation.capture_keyframe(steps=nb_steps)
+
 viewer.camera.angles = (0.0, 360.0+360, 90.0)
 animation.capture_keyframe(steps=nb_steps)
+
 viewer.camera.zoom = original_zoom
 viewer.camera.angles = (0.0, 360.0+360+180, 90.0)
 animation.capture_keyframe(steps=nb_steps)
+
 viewer.camera.angles = (0.0, 360.0+360+360, 90.0)
 animation.capture_keyframe(steps=nb_steps)
-animation.animate(f'{data_name[:-4]}2.mov', canvas_only=True, fps=60)
+
+animation.animate(f'{data_name[:-4]}2.mov', canvas_only=True, fps=fps)
+
+
+from matplotlib.colors import ListedColormap
+ListedColormap(sns.color_palette("hls", 10))

@@ -27,8 +27,6 @@ to go from your high-imensional data to 3D UMAP-projected coordinates.
 <br>
 <span style="color:red">This step is computationally expensive and can take a long time.</span>
 
-Install `gdown` and `umap-learn` through `pip` or `conda`.
-
 ```python
 from os.path import join
 import gdown

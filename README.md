@@ -1,15 +1,28 @@
-# napari_3D_rotation
-Generate rotating 3D UMAP in napari
+# napari 3D UMAP rotation example
+Example of how to generate a rotating 3D UMAP in [napari](http://www.napari.org).
+This examples uses data from the [cytoself](https://www.nature.com/articles/s41592-022-01541-z)
+project applied to [OpenCell](https://opencell.czbiohub.org/) data. The code is quite specific
+to our data and purpose but gives you a good starting point for your own experimentation...
+
+![Rotating GIF](demo.gif)
 
 ## Installation
+
 ```bash
 conda create -n napari3drot python=3.9
 conda activate napari3drot
 pip install -r requirements.txt
 ```
 
+If you are on a M1 Mac, you should try instead the `setup_env.sh` script.
 
-## Sample code
+
+## Sample code for generating a rotating 3D UMAP:
+
+In the following we assume you have already the 3D point coordinates
+saved as a numpy array (npy). You can use the [UMAP](https://umap-learn.readthedocs.io/en/latest/) package.
+
+
 ```python
 from os.path import join
 import napari
@@ -64,14 +77,23 @@ animation.animate(f'demo.gif', canvas_only=True, fps=20, scale_factor=scale_fact
 
 ```
 
-![Rotating GIF](demo.gif)
 
-Supported output formats are
+
+Supported output formats are: 
 `.gif`, `.mp4`, `.mov`, `.avi`, `.mpg`, `.mpeg`, `.mkv`, `.wmv`
-If no extension is provided, images are saved as a folder of PNGs
+If no extension is provided, images are saved as a folder of PNGs.
 
+## Generating more complex videos
+See the videos in [this](https://twitter.com/loicaroyer/status/1551583552042455040?s=20&t=BBsuuAr8VVToiWaAs-ooaQ) 
+and [this](https://twitter.com/loicaroyer/status/1551583560649256960?s=20&t=BBsuuAr8VVToiWaAs-ooaQ) tweets for an examles of a videos that were made from clips generated with napari.
+We used the presentation tool KeyNote to compose these more complex videos with added text, effects,
+and overlays -- but any other video editing tool could be similarly used.
 
-## Print Legend
+## Legend
+
+You might need to generate the legend if you want to compose more complex videos
+using video editing tools. Here is an example on how to do that:
+
 ```python
 import matplotlib.pyplot as plt
 
@@ -93,4 +115,6 @@ legendFig.savefig('legend_uniorg.png', dpi=300)
 
 ```
 
-![Rotating GIF](legend_uniorg.png)
+![legend](legend_uniorg.png)
+
+

@@ -25,7 +25,7 @@ to go from your high-imensional data to 3D UMAP-projected coordinates.
 
 (Optional) Compute UMAP from embeddings 
 <br>
-<span style="color:red">This step is computationally expensive and can take a long time.</span>
+**<span style="color:red">This step is computationally expensive and can take a long time.</span>**
 
 ```python
 from os.path import join

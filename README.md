@@ -23,6 +23,30 @@ In the following we assume you have already the 3D point coordinates
 saved as a numpy array (npy). You can use the [UMAP](https://umap-learn.readthedocs.io/en/latest/) package
 to go from your high-imensional data to 3D UMAP-projected coordinates.
 
+(Optional) Compute UMAP from embeddings 
+<br>
+<span style="color:red">This step is computationally expensive and can take a long time.</span>
+
+Install `gdown` and `umap-learn` through `pip` or `conda`.
+
+```python
+from os.path import join
+import gdown
+import numpy as np
+import umap
+
+gdown.download(
+    'https://drive.google.com/uc?id=1fXd0VRMoE7Sk9Jbd-lBsy55u8DKHHFZJ',
+    join('data', 'embeddings.npy'),
+    quiet=False,
+)
+embeddings = np.load(join('data', 'embeddings.npy'))
+
+reducer = umap.UMAP(n_components=3, n_neighbors=1000, min_dist=0, verbose=True)
+umap3d_data = reducer.fit_transform(embeddings)
+```
+
+Generate a rotating 3D UMAP animation
 
 ```python
 from os.path import join
@@ -32,11 +56,11 @@ import seaborn as sns
 from napari_animation import Animation
 
 # Load data:
-data_name = 'cuml_umap3D_vqindhist2_nb1000_md0'
+data_name = 'umap3D_coordinates'
 # UMAP 3D coordinates:
 umap3d_data = np.load(join('data', data_name + '.npy'))
 # Annotation data for colors:
-umap_lab = np.load(join('data', 'test_label_nucenter_uniorg_corum.npy'), allow_pickle=True)
+umap_lab = np.load(join('data', 'label.npy'), allow_pickle=True)
 
 # Make a color matrix for the annotations:
 # (Quite specific to our data and problem)
@@ -57,7 +81,7 @@ viewer = napari.view_points(
     scale=(100,) * 3, 
     shading='spherical', 
     size=0.06, 
-    name='umap3d_nb1000', 
+    name='umap3d', 
     edge_width=0,
     face_color=lab_color, 
     ndisplay=3,
@@ -89,7 +113,6 @@ animation.capture_keyframe(steps=nb_steps)
 
 # Render animation as a GIF:
 animation.animate(f'demo.gif', canvas_only=True, fps=20, scale_factor=scale_factor)
-
 ```
 
 
@@ -114,7 +137,7 @@ import matplotlib.pyplot as plt
 
 plt.style.use('dark_background')
 fig, ax = plt.subplots(1)
-legendFig = plt.figure(figsize=(1.6, 2.4))
+legendFig = plt.figure(figsize=(1.8, 2.4))
 plist = []
 for i, c in enumerate(cmap):
     plist.append(
@@ -127,9 +150,10 @@ plist.append(
 )
 legendFig.legend(plist, np.hstack([uniq_uniorg, 'others']), loc='center', frameon=False)
 legendFig.savefig('legend_uniorg.png', dpi=300)
-
 ```
 
 ![legend](legend_uniorg.png)
 
 
+## Tested Environment
+macOS 11.6.1, RAM 32GB (Intel CPU)

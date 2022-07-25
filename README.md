@@ -69,3 +69,28 @@ animation.animate(f'demo.gif', canvas_only=True, fps=20, scale_factor=scale_fact
 Supported output formats are
 `.gif`, `.mp4`, `.mov`, `.avi`, `.mpg`, `.mpeg`, `.mkv`, `.wmv`
 If no extension is provided, images are saved as a folder of PNGs
+
+
+## Print Legend
+```python
+import matplotlib.pyplot as plt
+
+plt.style.use('dark_background')
+fig, ax = plt.subplots(1)
+legendFig = plt.figure(figsize=(1.6, 2.4))
+plist = []
+for i, c in enumerate(cmap):
+    plist.append(
+        ax.scatter(i, i, c=np.array(cmap[i] + (1,)).reshape(1, -1), s=40, label=uniq_uniorg[i])
+    )
+plist.append(
+    ax.scatter(
+        i + 1, i + 1, c=np.array(sns.color_palette('Greys', 100)[9] + (1,)).reshape(1, -1), s=40, label='others'
+    )
+)
+legendFig.legend(plist, np.hstack([uniq_uniorg, 'others']), loc='center', frameon=False)
+legendFig.savefig('legend_uniorg.png', dpi=300)
+
+```
+
+![Rotating GIF](legend_uniorg.png)

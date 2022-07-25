@@ -13,9 +13,9 @@ import seaborn as sns
 from napari_animation import Animation
 
 # Load data
-data_name = 'cuml_umap3D_vqindhist2_nb1000_md0'
+data_name = 'umap3D_coordinates'
 umap3d_data = np.load(join('data', data_name + '.npy'))
-umap_lab = np.load(join('data', 'test_label_nucenter_uniorg_corum.npy'), allow_pickle=True)
+umap_lab = np.load(join('data', 'label.npy'), allow_pickle=True)
 
 # Make a color matrix for uniorg
 greys = np.array(sns.color_palette('Greys', 100)[9] + (0.25,)).reshape(1, -1)
@@ -52,10 +52,7 @@ plist.append(
     )
 )
 legendFig.legend(plist, np.hstack([uniq_uniorg, 'others']), loc='center', frameon=False)
-legendFig.savefig('legend_uniorg.png',
-                  dpi=300,
-                  transparent=True
-                  )
+legendFig.savefig('legend_uniorg.png', dpi=300, transparent=True)
 
 
 viewer = napari.view_points(

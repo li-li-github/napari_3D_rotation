@@ -1,5 +1,10 @@
 """
 This script creates a rotating 3D UMAP in napari viewer and record it as a video.
+This is the script that was used to generate these videos:
+https://twitter.com/loicaroyer/status/1551583552042455040?s=20&t=BBsuuAr8VVToiWaAs-ooaQ
+https://twitter.com/loicaroyer/status/1551583560649256960?s=20&t=BBsuuAr8VVToiWaAs-ooaQ
+for the publication in Nature Methods of cytoself:
+https://www.nature.com/articles/s41592-022-01541-z
 """
 from os.path import join
 import napari

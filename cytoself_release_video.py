@@ -21,8 +21,6 @@ umap_lab = np.load(join('data', 'label.npy'), allow_pickle=True)
 greys = np.array(sns.color_palette('Greys', 100)[9] + (0.25,)).reshape(1, -1)
 uniq_uniorg = np.unique(umap_lab[:, 0])
 lab_color = np.zeros((len(umap_lab), 4))
-lab_color_grey = np.zeros((len(umap_lab), 4))
-lab_color_tmp = np.zeros((len(umap_lab), 4))
 cmap = sns.color_palette("hls", len(uniq_uniorg))
 for i, fmly in enumerate(uniq_uniorg):
     if fmly == 'others':
@@ -31,8 +29,7 @@ for i, fmly in enumerate(uniq_uniorg):
         c = np.array(cmap[i] + (1,)).reshape(1, -1)
     ind = umap_lab[:, 0] == fmly
     lab_color[ind] = c
-    lab_color_grey[ind] = greys
-    lab_color_tmp[ind] = greys
+
 
 
 import matplotlib.pyplot as plt
@@ -80,15 +77,14 @@ viewer.reset_view()
 original_zoom = viewer.camera.zoom
 
 angle = 0
-viewer.camera.zoom = 0.1
-viewer.camera.angles = (0.0, angle, 90.0)
-viewer.layers[0].face_color = lab_color_tmp
-animation.capture_keyframe()
+# viewer.camera.zoom = 0.1
+# viewer.camera.angles = (0.0, angle, 90.0)
+# animation.capture_keyframe()
 
 viewer.camera.zoom = 0.6
-for i in range(2*5):
-    angle += 180
+for i in range(2):
     viewer.camera.angles = (0.0, angle, 90.0)
     animation.capture_keyframe(steps=nb_steps)
+    angle += 180
 
-animation.animate(f'{data_name[:-4]}.mov', canvas_only=True, fps=fps)
+animation.animate(f'3d_umap.gif', canvas_only=True, fps=fps)

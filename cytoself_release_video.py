@@ -21,15 +21,16 @@ umap_lab = np.load(join('data', 'label.npy'), allow_pickle=True)
 greys = np.array(sns.color_palette('Greys', 100)[9] + (0.25,)).reshape(1, -1)
 uniq_uniorg = np.unique(umap_lab[:, 0])
 lab_color = np.zeros((len(umap_lab), 4))
-cmap = sns.color_palette("hls", len(uniq_uniorg))
-for i, fmly in enumerate(uniq_uniorg):
+cmap = sns.color_palette("hls", len(uniq_uniorg) - 1)
+i = 0
+for fmly in uniq_uniorg:
     if fmly == 'others':
         c = greys
     else:
         c = np.array(cmap[i] + (1,)).reshape(1, -1)
+        i += 1
     ind = umap_lab[:, 0] == fmly
     lab_color[ind] = c
-
 
 
 import matplotlib.pyplot as plt
@@ -38,18 +39,24 @@ plt.style.use('dark_background')
 fig, ax = plt.subplots(1)
 legendFig = plt.figure(figsize=(1.8, 2.4))
 plist = []
-for i, c in enumerate(cmap):
-    uniq_uniorg[i] = uniq_uniorg[i].replace('_', ' ')
-    plist.append(
-        ax.scatter(i, i, c=np.array(cmap[i] + (1,)).reshape(1, -1), s=40, label=uniq_uniorg[i])
-    )
+i = 0
+leg_names = []
+for fmly in uniq_uniorg:
+    fmly = fmly.replace('_', ' ')
+    if fmly != 'others':
+        plist.append(
+            ax.scatter(i, i, c=np.array(cmap[i] + (1,)).reshape(1, -1), s=40, label=uniq_uniorg[i])
+        )
+        i += 1
+        leg_names.append(fmly)
 plist.append(
     ax.scatter(
         i + 1, i + 1, c=np.array(sns.color_palette('Greys', 100)[9] + (1,)).reshape(1, -1), s=40, label='others'
     )
 )
-legendFig.legend(plist, np.hstack([uniq_uniorg, 'others']), loc='center', frameon=False)
-legendFig.savefig('legend_uniorg.png', dpi=300, transparent=True)
+leg_names.append('others')
+legendFig.legend(plist, leg_names, loc='center', frameon=False)
+legendFig.savefig('legend_uniorg_transparent.png', dpi=300, transparent=True)
 
 
 viewer = napari.view_points(
